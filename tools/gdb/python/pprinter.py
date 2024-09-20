@@ -1,15 +1,15 @@
-#
+# SPDX-License-Identifier: BSD-2-Clause
+
 # RTEMS Tools Project (http://www.rtems.org/)
-# Copyright 2018 embedded brains GmbH
-# Copyright 2022 OAR Corporation
+# Copyright 2024-2024 Suraj Kumar 
 # All rights reserved.
-#
-# This file is part of the RTEMS Tools package in 'rtems-bsp-builder'.
-#
+
+# This package is part of the RTEMS Tools Project.
+
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted, provided that the above
 # copyright notice and this permission notice appear in all copies.
-#
+
 # THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
 # WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
 # MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
@@ -18,20 +18,18 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-#
-# RISC-V Architecture
-#
-[riscv]
-bsps = frdme310arty,
-    griscv, grv32i, grv32im, grv32imac, grv32imafdc,
-    mpfs64imafdc,
-    noel32im, noel32imafd, noel64imac, noel64imafd, noel64imafdc,
-    rv32i, rv32iac, rv32im, rv32imac, rv32imafc, rv32imafd, rv32imafdc,
-    rv64imac, rv64imafd, rv64imafdc,
-    niosvc10lp
+# This script is responsible for registering the pretty-printers provided and
+# maintained by GCC (present in stdcxx.py) 
+# It also registers all RTEMS pretty-printers, maintained in rtems_pprinters.py
 
-exclude-smp = frdme310arty,
-    grv32i, grv32im,
-    noel32im,
-    rv32i, rv32im,
-    niosvc10lp
+from . import stdcxx
+import gdb.printing 
+import rtems_pprinters as rtems_library
+
+def register_rtems_printers():
+    gdb.printing.register_pretty_printer(
+        gdb.current_objfile(), 
+        rtems_library.build_pretty_printer()
+        )
+
+register_rtems_printers()

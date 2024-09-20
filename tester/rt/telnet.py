@@ -113,6 +113,7 @@ class tty:
             self._reopen()
         return data
 
+
 if __name__ == "__main__":
     if len(sys.argv) == 2:
         import time

@@ -42,6 +42,7 @@ import time
 from rtemstoolkit import path
 
 import tester.rt.telnet
+import tester.rt.juart
 
 #
 # Not available on Windows. Not sure what this means.
@@ -121,7 +122,9 @@ class tty(console):
                         if c == '\n':
                             me.output(line)
                             line = ''
-        if stty and path.exists(self.dev):
+        if "juart-terminal.exe" in self.dev:
+            self.tty = tester.rt.juart.tty(self.dev)
+        elif stty and path.exists(self.dev):
             self.tty = stty.tty(self.dev)
         else:
             self.tty = tester.rt.telnet.tty(self.dev)

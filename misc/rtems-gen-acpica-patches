@@ -1,5 +1,7 @@
+#! /usr/bin/env python
+#
 # RTEMS Tools Project (http://www.rtems.org/)
-# Copyright 2014 Chris Johns (chrisj@rtems.org)
+# Copyright 2024 Matheus Pecoraro (matpecor@gmail.com)
 # All rights reserved.
 #
 # This file is part of the RTEMS Tools package in 'rtems-tools'.
@@ -27,12 +29,17 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-import gdb
-import rtems
+from __future__ import print_function
 
-def get_architure():
-    frame = gdb.selected_frame()
-    arch = frame.architecture()
-    return arch.name()
+import sys, os
 
-print('RTEMS GDB Support')
+base = os.path.dirname(os.path.dirname(os.path.abspath(sys.argv[0])))
+rtems = os.path.join(base, 'share', 'rtems')
+sys.path = sys.path[0:1] + [rtems, base] + sys.path[1:]
+
+try:
+    import misc.tools.gen_acpica_patches
+    misc.tools.gen_acpica_patches.run(sys.argv)
+except ImportError:
+    print("Incorrect RTEMS Tools installation", file=sys.stderr)
+    sys.exit(1)

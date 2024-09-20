@@ -561,7 +561,7 @@ class execute(object):
         self.lock.acquire()
         try:
             if self.proc is not None:
-                print("sending sig")
+                #print("sending sig")
                 self.proc.send_signal(signal)
         except:
             raise

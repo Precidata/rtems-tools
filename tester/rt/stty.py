@@ -560,6 +560,7 @@ class tty(object):
     def read(self):
         return self.fd.read()
 
+
 if __name__ == "__main__":
     if len(sys.argv) == 2:
         t = tty(sys.argv[1])

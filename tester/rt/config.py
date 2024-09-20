@@ -446,6 +446,7 @@ class file(config.file):
                 if not ok_to_kill and \
                    ('*** END OF TEST ' in text or \
                     '*** FATAL ***' in text or \
+                    '[ RTEMS shutdown ]' in text or \
                     '*** TIMEOUT TIMEOUT' in text or \
                     '*** TEST TOO LONG' in text):
                     self._capture_console('test end: %s' % (self.test_label))
@@ -453,6 +454,7 @@ class file(config.file):
                         ok_to_kill = \
                             '*** END OF TEST %s ***' % (self.test_label) in text or \
                             '*** FATAL ***' in text or \
+                            '[ RTEMS shutdown ]' in text or \
                             '*** TIMEOUT TIMEOUT' in text or \
                             '*** TEST TOO LONG' in text
                     self.process.target_end()
